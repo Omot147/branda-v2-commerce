@@ -1,0 +1,10 @@
+"use client";
+import Link from "next/link";
+import Image from "next/image";
+import { useCart } from "@/components/CartProvider";
+import { formatNaira } from "@/lib/api";
+export default function CartPage() {
+  const {items,setQty,remove}=useCart();
+  const subtotal=items.reduce((sum,i)=>sum+i.product.price*i.quantity,0),delivery=subtotal===0||subtotal>=50000?0:2500;
+  return <main className="container page"><div className="eyebrow">Your selection</div><h1 className="page-title">Your bag</h1><p className="muted">Review your items before checking out.</p>{!items.length?<div className="empty"><h2>Your bag is waiting</h2><p className="muted">Explore the collection and add something useful.</p><Link href="/#shop" className="button">Browse products</Link></div>:<div className="layout"><div>{items.map(i=><div className="cart-row" key={i.product.id}><Image src={i.product.image} alt={i.product.name} width={160} height={160} unoptimized/><div><Link href={`/products/${i.product.id}`}><b>{i.product.name}</b></Link><div className="category">{formatNaira(i.product.price)} each</div><div className="qty"><button aria-label="Decrease quantity" onClick={()=>i.quantity===1?remove(i.product.id):setQty(i.product.id,i.quantity-1)}>−</button><span>{i.quantity}</span><button aria-label="Increase quantity" disabled={i.quantity>=i.product.stock} onClick={()=>setQty(i.product.id,i.quantity+1)}>+</button><button className="small-button" onClick={()=>remove(i.product.id)}>Remove</button></div></div><b>{formatNaira(i.product.price*i.quantity)}</b></div>)}</div><aside className="summary"><h3>Order summary</h3><div className="sumline"><span>Subtotal</span><span>{formatNaira(subtotal)}</span></div><div className="sumline"><span>Delivery</span><span>{delivery===0?"Free":formatNaira(delivery)}</span></div><div className="sumline total"><span>Total</span><span>{formatNaira(subtotal+delivery)}</span></div><p className="muted" style={{fontSize:11}}>Free delivery on orders of ₦50,000 or more.</p><Link href="/checkout" className="button" style={{width:"100%"}}>Continue to checkout →</Link></aside></div>}</main>
+}

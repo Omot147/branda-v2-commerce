@@ -1,0 +1,5 @@
+"use client";
+import Link from "next/link";
+import { useCart } from "./CartProvider";
+export function SiteHeader(){const {count}=useCart();return <header className="container nav"><Link href="/" className="brand">branda<span>.</span></Link><nav className="navlinks"><Link href="/#shop">Shop</Link><Link href="/#story">Our approach</Link><Link href="/#featured">Featured</Link></nav><Link className="cartlink" href="/cart">Bag ({count}) ↗</Link></header>}
+export function SiteFooter(){return <footer className="footer"><div className="container footer-inner"><div><Link href="/" className="brand">branda<span style={{color:"#d9f27a"}}>.</span></Link><p>Thoughtful essentials for everyday routines. Useful objects, considered details, and a calmer way to shop.</p></div><div><b>Explore</b><p><Link href="/#shop">Shop all</Link><br/><Link href="/cart">Your bag</Link><br/><Link href="/checkout">Checkout</Link></p></div><div><b>Need help?</b><p>Questions about an order?<br/>Email: hello@branda.example</p></div><small>© {new Date().getFullYear()} Branda. Demo storefront — replace with your brand details.</small></div></footer>}

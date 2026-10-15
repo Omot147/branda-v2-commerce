@@ -1,0 +1,4 @@
+"use client";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+export default function OrderSuccessPage(){const [id,setId]=useState("");useEffect(()=>{const p=new URLSearchParams(location.search).get("id")||"";setId(p)},[]);return <main className="container page"><div className="empty"><div className="eyebrow">Order received</div><h1 className="page-title">Thank you.</h1><p className="muted">Your demo order has been recorded by the backend.</p>{id&&<><p>Order reference</p><div className="order-number">{id}</div></>}<p className="notice" style={{margin:"20px auto",maxWidth:500}}>Payment has not been processed. This starter is ready for payment integration, but it does not charge customers.</p><Link className="button" href="/#shop">Continue shopping</Link></div></main>}
